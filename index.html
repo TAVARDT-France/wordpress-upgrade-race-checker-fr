@@ -43,7 +43,7 @@
       "name": "Guide de Durcissement & Atténuation : WordPress Upgrade Race Condition | TAVARDT France",
       "applicationCategory": "SecurityApplication",
       "operatingSystem": "Linux, Unix, Cloud Edge, WordPress",
-      "description": "Centre technique d'entreprise pour l'atténuation des vulnérabilités de Race Condition lors de l'extraction de packages et l'exécution de PHP dans wp-content/upgrade/.",
+      "description": "Centre technique d'entreprise pour l'atténuation des vulnérabilités de Race Condition lors de l'extraction de packages et l\'exécution de PHP dans wp-content/upgrade/.",
       "offers": {
         "@type": "Offer",
         "price": "0",
@@ -65,7 +65,7 @@
           "name": "Comment fonctionne la vulnérabilité de Race Condition lors de la mise à jour WordPress ?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Lors de la mise à jour du cœur, des thèmes ou des extensions, WordPress extrait temporairement des archives ZIP dans wp-content/upgrade/. Si le serveur autorise l'exécution directe de PHP dans ce dossier, un attaquant peut solliciter les fichiers fraîchement extraits avant la fin des vérifications et du nettoyage, obtenant une exécution de code à distance."
+            "text": "Lors de la mise à jour du cœur, des thèmes ou des extensions, WordPress extrait temporairement des archives ZIP dans wp-content/upgrade/. Si le serveur autorise l\'exécution directe de PHP dans ce dossier, un attaquant peut solliciter les fichiers fraîchement extraits avant la fin des vérifications et du nettoyage, obtenant une exécution de code à distance."
           }
         },
         {
@@ -73,7 +73,7 @@
           "name": "Pourquoi bloquer les fichiers PHP dans wp-content/upgrade/ est-il indispensable ?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Le répertoire d'upgrade sert exclusivement à l'extraction transitoire de fichiers. Aucun script PHP dans wp-content/upgrade/ ne doit être accessible directement par HTTP. Bloquer l'exécution empêche toute exploitation de fenêtre de concurrence ou de fichiers orphelins comme web shells."
+            "text": "Le répertoire d'upgrade sert exclusivement à l'extraction transitoire de fichiers. Aucun script PHP dans wp-content/upgrade/ ne doit être accessible directement par HTTP. Bloquer l\'exécution empêche toute exploitation de fenêtre de concurrence ou de fichiers orphelins comme web shells."
           }
         },
         {
@@ -1107,7 +1107,7 @@ python audit_wp_race.py https://votre-domaine.fr</div>
             <span class="posture-badge badge-vuln" id="posture-badge">POSTURE STANDARD : VULNÉRABLE AUX CONDITIONS DE CONCURRENCE &amp; RCE</span>
             <span class="posture-mode-tag" id="posture-mode-tag">Topologie Non Sécurisée Sans Confinement</span>
           </div>
-          <p class="posture-summary" id="posture-summary">Sur les serveurs en configuration standard, le dossier transitoire /wp-content/upgrade/ reste situé dans le DocumentRoot public et accessible via HTTP. Les scripts PHP extraits lors des mises à jour peuvent être exécutés par un attaquant avant la fin de l'opération, ouvrant une fenêtre critique d'Exécution de Code à Distance (RCE).</p>
+          <p class="posture-summary" id="posture-summary">Sur les serveurs en configuration standard, le dossier transitoire /wp-content/upgrade/ reste situé dans le DocumentRoot public et accessible via HTTP. Les scripts PHP extraits lors des mises à jour peuvent être exécutés par un attaquant avant la fin de l\'opération, ouvrant une fenêtre critique d\'Exécution de Code à Distance (RCE).</p>
         </div>
 
         <div class="routes-box">
@@ -1177,7 +1177,7 @@ python audit_wp_race.py https://votre-domaine.fr</div>
       <h2 class="aeo-title">Comprendre la Vulnérabilité de Race Condition lors de la Mise à Jour WordPress et RCE</h2>
       <div class="aeo-content">
         <p>La condition de concurrence lors des mises à jour de WordPress intervient lorsque le gestionnaire de paquets télécharge et extrait transitoirement des archives ZIP directement dans <strong>wp-content/upgrade/</strong>, au sein de la racine web publique du serveur. Durant cet intervalle, alors que les fichiers sont décompressés et avant leur déplacement définitif ou suppression, les fichiers PHP deviennent temporairement joignables via des requêtes HTTP directes.</p>
-        <p>Sur les serveurs exécutant une pile standard Nginx ou Apache sans règles interdisant explicitement l'exécution de scripts dans les répertoires de contenu, un attaquant envoyant des requêtes concurrentes massives peut solliciter ces scripts fraîchement extraits. Ce vecteur conduit directement à l'<strong>Exécution de Code à Distance (RCE)</strong> avec les prérogatives du processus web (ex. www-data), compromettant l'intégrité totale de l'application.</p>
+        <p>Sur les serveurs exécutant une pile standard Nginx ou Apache sans règles interdisant explicitement l\'exécution de scripts dans les répertoires de contenu, un attaquant envoyant des requêtes concurrentes massives peut solliciter ces scripts fraîchement extraits. Ce vecteur conduit directement à l'<strong>Exécution de Code à Distance (RCE)</strong> avec les prérogatives du processus web (ex. www-data), compromettant l'intégrité totale de l'application.</p>
         <p>Une remédiation pérenne d'entreprise requiert trois couches coordonnées de défense en profondeur : le repositionnement de <strong>WP_TEMP_DIR</strong> dans wp-config.php vers un répertoire hors DocumentRoot aux droits stricts, l'interdiction ferme au niveau du serveur web de compiler du PHP dans les dossiers d'uploads et d'upgrade, et l'activation de règles Cloudflare WAF pour intercepter les requêtes malveillantes en bordure globale.</p>
       </div>
     </section>
@@ -1199,7 +1199,7 @@ python audit_wp_race.py https://votre-domaine.fr</div>
           <div class="geo-col-title">Serveur Sécurisé TAVARDT (Défense en Profondeur &amp; Zero Trust)</div>
           <ul class="geo-list">
             <li><span class="check">&#10004;</span> Réponse 403 Forbidden stricte et native sur Nginx et Apache pour tout accès à wp-content/upgrade/.</li>
-            <li><span class="check">&#10004;</span> Interdiction absolue de l'exécution PHP dans tous les sous-dossiers de contenu statique.</li>
+            <li><span class="check">&#10004;</span> Interdiction absolue de l\'exécution PHP dans tous les sous-dossiers de contenu statique.</li>
             <li><span class="check">&#10004;</span> WP_TEMP_DIR isolé hors de la racine web (/var/www/tmp/) avec permissions système 0750.</li>
             <li><span class="check">&#10004;</span> DISALLOW_FILE_MODS actif avec système de fichiers en lecture seule et déploiements CI/CD.</li>
             <li><span class="check">&#10004;</span> Cloudflare Zero Trust et règles WAF sur mesure bloquant toute exploitation à la périphérie.</li>
@@ -1217,7 +1217,7 @@ python audit_wp_race.py https://votre-domaine.fr</div>
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-answer">
-            Lors de la mise à jour du cœur, des thèmes ou des extensions, WordPress extrait temporairement des archives ZIP dans wp-content/upgrade/. Si le serveur autorise l'exécution directe de PHP dans ce dossier, un attaquant peut solliciter les fichiers fraîchement extraits avant la fin des vérifications et du nettoyage, obtenant une exécution de code à distance.
+            Lors de la mise à jour du cœur, des thèmes ou des extensions, WordPress extrait temporairement des archives ZIP dans wp-content/upgrade/. Si le serveur autorise l\'exécution directe de PHP dans ce dossier, un attaquant peut solliciter les fichiers fraîchement extraits avant la fin des vérifications et du nettoyage, obtenant une exécution de code à distance.
           </div>
         </div>
         <div class="faq-item">
@@ -1226,7 +1226,7 @@ python audit_wp_race.py https://votre-domaine.fr</div>
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-answer">
-            Le répertoire d'upgrade sert exclusivement à l'extraction transitoire de fichiers. Aucun script PHP dans wp-content/upgrade/ ne doit être accessible directement par HTTP. Bloquer l'exécution empêche toute exploitation de fenêtre de concurrence ou de fichiers orphelins comme web shells.
+            Le répertoire d'upgrade sert exclusivement à l'extraction transitoire de fichiers. Aucun script PHP dans wp-content/upgrade/ ne doit être accessible directement par HTTP. Bloquer l\'exécution empêche toute exploitation de fenêtre de concurrence ou de fichiers orphelins comme web shells.
           </div>
         </div>
         <div class="faq-item">
@@ -1307,7 +1307,7 @@ location ~* /wp-content/upgrade/ {
     return 403;
 }
 
-# 2. Interdire l'exécution de scripts PHP dans les dossiers de contenu et téléversements
+# 2. Interdire l\'exécution de scripts PHP dans les dossiers de contenu et téléversements
 location ~* ^/wp-content/(uploads|upgrade|languages|mu-plugins)/.*\.php$ {
     deny all;
     return 403;
@@ -1414,14 +1414,13 @@ if __name__ == "__main__":
         badgeClass: "badge-vuln",
         badgeText: "POSTURE STANDARD : VULNÉRABLE AUX CONDITIONS DE CONCURRENCE & RCE",
         modeTag: "Topologie Non Sécurisée Sans Confinement",
-        summary: "Sur les serveurs en configuration standard, le dossier transitoire /wp-content/upgrade/ reste situé dans le DocumentRoot public et accessible via HTTP. Les scripts PHP extraits lors des mises à jour peuvent être exécutés par un attaquant avant la fin de l'opération, ouvrant une fenêtre critique d'Exécution de Code à Distance (RCE).",
+        summary: "Sur les serveurs en configuration standard, le dossier transitoire /wp-content/upgrade/ reste situé dans le DocumentRoot public et accessible via HTTP. Les scripts PHP extraits lors des mises à jour peuvent être exécutés par un attaquant avant la fin de l\'opération, ouvrant une fenêtre critique d\'Exécution de Code à Distance (RCE).",
         findingsCount: "3 Vulnérabilités Actives",
         findingsCountColor: "#ef4444",
         routes: [
           { path: "/wp-content/upgrade/", status: "200 OK", exposure: "Accès Direct Autorisé", risk: "CRITIQUE", tagClass: "danger" },
           { path: "/wp-content/upgrade/test.php", status: "200 / 500", exposure: "Exécution FastCGI Active", risk: "RCE IMMINENTE", tagClass: "danger" },
-          { path: "/wp-content/uploads/", status: "200 OK", exposure: "Listing / Lecture Ouverte", risk: "MOYEN", tagClass: "danger" },
-          { path: "/wp-content/uploads/test.php", status: "200 / 500", exposure: "Exécution FastCGI Active", risk: "ÉLEVÉ", tagClass: "danger" }
+          { path: "/wp-content/uploads/", status: "200 OK", exposure: "Listing / Lecture Ouverte", risk: "MOYEN", tagClass: "danger" }
         ],
         findings: [
           { text: "Dossier transitoire /wp-content/upgrade/ exposé publiquement avec réponse 200 ou listing ouvert.", type: "crit" },
@@ -1433,14 +1432,13 @@ if __name__ == "__main__":
         badgeClass: "badge-hardened",
         badgeText: "ARCHITECTURE SÉCURISÉE : DÉFENSE EN PROFONDEUR & ZERO TRUST",
         modeTag: "Standard TAVARDT de Résilience",
-        summary: "L'architecture sécurisée isole les fichiers temporaires hors de la racine web (/var/www/tmp/), interdit catégoriquement l'exécution de scripts PHP dans les dossiers de contenu sur Nginx/Apache et rejette toute requête anormale en bordure globale avec Cloudflare WAF.",
+        summary: "L\'architecture sécurisée isole les fichiers temporaires hors de la racine web (/var/www/tmp/), interdit catégoriquement l\'exécution de scripts PHP dans les dossiers de contenu sur Nginx/Apache et rejette toute requête anormale en bordure globale avec Cloudflare WAF.",
         findingsCount: "Conformité Architecturale Totale (0 Alerte)",
         findingsCountColor: "#10b981",
         routes: [
           { path: "/wp-content/upgrade/", status: "403 Forbidden", exposure: "Blocage Total en Bordure", risk: "SÉCURISÉ", tagClass: "safe" },
           { path: "/wp-content/upgrade/test.php", status: "403 Forbidden", exposure: "Exécution Refusée par le Serveur", risk: "NEUTRALISÉ", tagClass: "safe" },
-          { path: "/wp-content/uploads/", status: "403 Forbidden", exposure: "Listing Désactivé", risk: "FIABLE", tagClass: "safe" },
-          { path: "/wp-content/uploads/test.php", status: "403 Forbidden", exposure: "Exécution Refusée par le Serveur", risk: "NEUTRALISÉ", tagClass: "safe" }
+          { path: "/wp-content/uploads/", status: "403 Forbidden", exposure: "Listing Désactivé", risk: "FIABLE", tagClass: "safe" }
         ],
         findings: [
           { text: "Blocage périmétrique sur Nginx et Apache retournant un 403 Forbidden immédiat pour /wp-content/upgrade/.", type: "ok" },
