@@ -43,7 +43,7 @@
       "name": "Guide de Durcissement & Atténuation : WordPress Upgrade Race Condition | TAVARDT France",
       "applicationCategory": "SecurityApplication",
       "operatingSystem": "Linux, Unix, Cloud Edge, WordPress",
-      "description": "Centre technique d'entreprise pour l'atténuation des vulnérabilités de Race Condition lors de l'extraction de packages et l\'exécution de PHP dans wp-content/upgrade/.",
+      "description": "Centre technique d'entreprise pour l'atténuation des vulnérabilités de Race Condition lors de l'extraction de packages et l'exécution de PHP dans wp-content/upgrade/.",
       "offers": {
         "@type": "Offer",
         "price": "0",
@@ -65,7 +65,7 @@
           "name": "Comment fonctionne la vulnérabilité de Race Condition lors de la mise à jour WordPress ?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Lors de la mise à jour du cœur, des thèmes ou des extensions, WordPress extrait temporairement des archives ZIP dans wp-content/upgrade/. Si le serveur autorise l\'exécution directe de PHP dans ce dossier, un attaquant peut solliciter les fichiers fraîchement extraits avant la fin des vérifications et du nettoyage, obtenant une exécution de code à distance."
+            "text": "Lors de la mise à jour du cœur, des thèmes ou des extensions, WordPress extrait temporairement des archives ZIP dans wp-content/upgrade/. Si le serveur autorise l'exécution directe de PHP dans ce dossier, un attaquant peut solliciter les fichiers fraîchement extraits avant la fin des vérifications et du nettoyage, obtenant une exécution de code à distance."
           }
         },
         {
@@ -73,7 +73,7 @@
           "name": "Pourquoi bloquer les fichiers PHP dans wp-content/upgrade/ est-il indispensable ?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Le répertoire d'upgrade sert exclusivement à l'extraction transitoire de fichiers. Aucun script PHP dans wp-content/upgrade/ ne doit être accessible directement par HTTP. Bloquer l\'exécution empêche toute exploitation de fenêtre de concurrence ou de fichiers orphelins comme web shells."
+            "text": "Le répertoire d'upgrade sert exclusivement à l'extraction transitoire de fichiers. Aucun script PHP dans wp-content/upgrade/ ne doit être accessible directement par HTTP. Bloquer l'exécution empêche toute exploitation de fenêtre de concurrence ou de fichiers orphelins comme web shells."
           }
         },
         {
