@@ -1411,42 +1411,42 @@ if __name__ == "__main__":
 
     const scenariosData = {
       vuln: {
-        badgeClass: 'badge-vuln',
-        badgeText: 'POSTURE STANDARD : VULNÉRABLE AUX CONDITIONS DE CONCURRENCE & RCE',
-        modeTag: 'Topologie Non Sécurisée Sans Confinement',
-        summary: 'Sur les serveurs en configuration standard, le dossier transitoire /wp-content/upgrade/ reste situé dans le DocumentRoot public et accessible via HTTP. Les scripts PHP extraits lors des mises à jour peuvent être exécutés par un attaquant avant la fin de l'opération, ouvrant une fenêtre critique d'Exécution de Code à Distance (RCE).',
-        findingsCount: '3 Vulnérabilités Actives',
-        findingsCountColor: '#ef4444',
+        badgeClass: "badge-vuln",
+        badgeText: "POSTURE STANDARD : VULNÉRABLE AUX CONDITIONS DE CONCURRENCE & RCE",
+        modeTag: "Topologie Non Sécurisée Sans Confinement",
+        summary: "Sur les serveurs en configuration standard, le dossier transitoire /wp-content/upgrade/ reste situé dans le DocumentRoot public et accessible via HTTP. Les scripts PHP extraits lors des mises à jour peuvent être exécutés par un attaquant avant la fin de l'opération, ouvrant une fenêtre critique d'Exécution de Code à Distance (RCE).",
+        findingsCount: "3 Vulnérabilités Actives",
+        findingsCountColor: "#ef4444",
         routes: [
-          { path: '/wp-content/upgrade/', status: '200 OK', exposure: 'Accès Direct Autorisé', risk: 'CRITIQUE', tagClass: 'danger' },
-          { path: '/wp-content/upgrade/test.php', status: '200 / 500', exposure: 'Exécution FastCGI Active', risk: 'RCE IMMINENTE', tagClass: 'danger' },
-          { path: '/wp-content/uploads/', status: '200 OK', exposure: 'Listing / Lecture Ouverte', risk: 'MOYEN', tagClass: 'danger' },
-          { path: '/wp-content/uploads/test.php', status: '200 / 500', exposure: 'Exécution FastCGI Active', risk: 'ÉLEVÉ', tagClass: 'danger' }
+          { path: "/wp-content/upgrade/", status: "200 OK", exposure: "Accès Direct Autorisé", risk: "CRITIQUE", tagClass: "danger" },
+          { path: "/wp-content/upgrade/test.php", status: "200 / 500", exposure: "Exécution FastCGI Active", risk: "RCE IMMINENTE", tagClass: "danger" },
+          { path: "/wp-content/uploads/", status: "200 OK", exposure: "Listing / Lecture Ouverte", risk: "MOYEN", tagClass: "danger" },
+          { path: "/wp-content/uploads/test.php", status: "200 / 500", exposure: "Exécution FastCGI Active", risk: "ÉLEVÉ", tagClass: "danger" }
         ],
         findings: [
-          { text: 'Dossier transitoire /wp-content/upgrade/ exposé publiquement avec réponse 200 ou listing ouvert.', type: 'crit' },
-          { text: 'Moteur FastCGI/PHP-FPM compilant les fichiers .php dans les répertoires temporaires et de téléversement.', type: 'crit' },
-          { text: 'Directive WP_TEMP_DIR absente de wp-config.php, conservant les archives dans le DocumentRoot.', type: 'crit' }
+          { text: "Dossier transitoire /wp-content/upgrade/ exposé publiquement avec réponse 200 ou listing ouvert.", type: "crit" },
+          { text: "Moteur FastCGI/PHP-FPM compilant les fichiers .php dans les répertoires temporaires et de téléversement.", type: "crit" },
+          { text: "Directive WP_TEMP_DIR absente de wp-config.php, conservant les archives dans le DocumentRoot.", type: "crit" }
         ]
       },
       hard: {
-        badgeClass: 'badge-hardened',
-        badgeText: 'ARCHITECTURE SÉCURISÉE : DÉFENSE EN PROFONDEUR & ZERO TRUST',
-        modeTag: 'Standard TAVARDT de Résilience',
-        summary: 'L'architecture sécurisée isole les fichiers temporaires hors de la racine web (/var/www/tmp/), interdit catégoriquement l'exécution de scripts PHP dans les dossiers de contenu sur Nginx/Apache et rejette toute requête anormale en bordure globale avec Cloudflare WAF.',
-        findingsCount: 'Conformité Architecturale Totale (0 Alerte)',
-        findingsCountColor: '#10b981',
+        badgeClass: "badge-hardened",
+        badgeText: "ARCHITECTURE SÉCURISÉE : DÉFENSE EN PROFONDEUR & ZERO TRUST",
+        modeTag: "Standard TAVARDT de Résilience",
+        summary: "L'architecture sécurisée isole les fichiers temporaires hors de la racine web (/var/www/tmp/), interdit catégoriquement l'exécution de scripts PHP dans les dossiers de contenu sur Nginx/Apache et rejette toute requête anormale en bordure globale avec Cloudflare WAF.",
+        findingsCount: "Conformité Architecturale Totale (0 Alerte)",
+        findingsCountColor: "#10b981",
         routes: [
-          { path: '/wp-content/upgrade/', status: '403 Forbidden', exposure: 'Blocage Total en Bordure', risk: 'SÉCURISÉ', tagClass: 'safe' },
-          { path: '/wp-content/upgrade/test.php', status: '403 Forbidden', exposure: 'Exécution Refusée par le Serveur', risk: 'NEUTRALISÉ', tagClass: 'safe' },
-          { path: '/wp-content/uploads/', status: '403 Forbidden', exposure: 'Listing Désactivé', risk: 'FIABLE', tagClass: 'safe' },
-          { path: '/wp-content/uploads/test.php', status: '403 Forbidden', exposure: 'Exécution Refusée par le Serveur', risk: 'NEUTRALISÉ', tagClass: 'safe' }
+          { path: "/wp-content/upgrade/", status: "403 Forbidden", exposure: "Blocage Total en Bordure", risk: "SÉCURISÉ", tagClass: "safe" },
+          { path: "/wp-content/upgrade/test.php", status: "403 Forbidden", exposure: "Exécution Refusée par le Serveur", risk: "NEUTRALISÉ", tagClass: "safe" },
+          { path: "/wp-content/uploads/", status: "403 Forbidden", exposure: "Listing Désactivé", risk: "FIABLE", tagClass: "safe" },
+          { path: "/wp-content/uploads/test.php", status: "403 Forbidden", exposure: "Exécution Refusée par le Serveur", risk: "NEUTRALISÉ", tagClass: "safe" }
         ],
         findings: [
-          { text: 'Blocage périmétrique sur Nginx et Apache retournant un 403 Forbidden immédiat pour /wp-content/upgrade/.', type: 'ok' },
-          { text: 'Compilateur PHP totalement désactivé sur l'ensemble des sous-répertoires de contenu WordPress.', type: 'ok' },
-          { text: 'WP_TEMP_DIR déplacé hors de la racine web (/var/www/tmp/) avec droits 0750 au niveau du système.', type: 'ok' },
-          { text: 'Règle Cloudflare WAF active écartant automatiquement toute tentative d'exploitation en bordure.', type: 'ok' }
+          { text: "Blocage périmétrique sur Nginx et Apache retournant un 403 Forbidden immédiat pour /wp-content/upgrade/.", type: "ok" },
+          { text: "Compilateur PHP totalement désactivé sur l'ensemble des sous-répertoires de contenu WordPress.", type: "ok" },
+          { text: "WP_TEMP_DIR déplacé hors de la racine web (/var/www/tmp/) avec droits 0750 au niveau du système.", type: "ok" },
+          { text: "Règle Cloudflare WAF active écartant automatiquement toute tentative d'exploitation en bordure.", type: "ok" }
         ]
       }
     };
